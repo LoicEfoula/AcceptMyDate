@@ -13,37 +13,44 @@
   --letter: #503e53;
   --serif: "Cormorant Garamond", Georgia, serif;
   --sans: "DM Sans", system-ui, sans-serif;
+  --pad-x: clamp(20px, 7.3vw, 32px);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
-html, body { height: 100%; }
+html { -webkit-text-size-adjust: 100%; }
 
 body {
+  min-height: 100vh;
+  min-height: 100dvh;
   background: var(--bg);
   font-family: var(--sans);
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
 }
 
-/* Conteneur au format mobile de la maquette (440 x 956) */
+/* Conteneur : plein écran sur mobile, carte centrée sur grand écran */
 .app {
-  position: relative;
   width: 100%;
   max-width: 440px;
   min-height: 100vh;
   min-height: 100dvh;
   margin: 0 auto;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
 }
 
 .screen {
-  position: absolute;
-  inset: 0;
+  flex: 1;
   display: none;
   flex-direction: column;
   justify-content: space-between;
-  padding: 36px 32px 32px;
+  gap: 20px;
+  padding:
+    max(28px, env(safe-area-inset-top))
+    var(--pad-x)
+    max(24px, env(safe-area-inset-bottom));
   background: var(--bg);
 }
 .screen.active { display: flex; }
@@ -85,22 +92,22 @@ body {
 }
 .eyebrow.small { font-size: 10px; font-weight: 400; margin-bottom: 0; }
 
-.title-43 { font-family: var(--serif); font-weight: 500; font-size: 43px; line-height: 1; color: var(--ink); }
-.title-44 { font-family: var(--serif); font-weight: 500; font-size: 44px; line-height: 1.08; color: var(--ink); }
-.title-46 { font-family: var(--serif); font-weight: 500; font-size: 46px; line-height: 1.08; color: var(--ink); }
+.title-43 { font-family: var(--serif); font-weight: 500; font-size: clamp(32px, 9.8vw, 43px); line-height: 1; color: var(--ink); }
+.title-44 { font-family: var(--serif); font-weight: 500; font-size: clamp(32px, 10vw, 44px); line-height: 1.08; color: var(--ink); }
+.title-46 { font-family: var(--serif); font-weight: 500; font-size: clamp(33px, 10.4vw, 46px); line-height: 1.08; color: var(--ink); }
 
-.sub { font-size: 16px; line-height: 1.4; color: var(--muted); }
+.sub { font-size: clamp(14px, 3.9vw, 16px); line-height: 1.4; color: var(--muted); }
 .sub.left { text-align: left; }
-.sub.small { font-size: 15px; }
+.sub.small { font-size: clamp(14px, 3.6vw, 15px); }
 
 /* ---------- Accueil ---------- */
 .letter {
   background: var(--card);
   border: 1px solid var(--line);
   border-radius: 24px;
-  padding: 24px;
-  font-size: 15px;
-  line-height: 22px;
+  padding: clamp(18px, 5.5vw, 24px);
+  font-size: clamp(14px, 3.6vw, 15px);
+  line-height: 1.47;
   color: var(--letter);
 }
 .letter p + p { margin-top: 14px; }
@@ -129,15 +136,14 @@ body {
   background: var(--card);
   border: 1px solid var(--line);
   border-radius: 28px;
-  padding: 36px 28px 40px;
+  padding: clamp(26px, 8vw, 36px) clamp(18px, 6.4vw, 28px) clamp(30px, 9vw, 40px);
   text-align: center;
   display: flex; flex-direction: column; gap: 24px;
 }
 
 /* ---------- Jour du date ---------- */
-.stack { display: flex; flex-direction: column; gap: 28px; }
+.stack { display: flex; flex-direction: column; gap: clamp(18px, 5vw, 28px); }
 .intro { display: flex; flex-direction: column; gap: 10px; }
-.intro .title-44 + .sub { margin-top: 2px; }
 
 .day-card {
   background: var(--card);
@@ -149,11 +155,32 @@ body {
 .day-card .eyebrow { margin-bottom: 0; }
 .day {
   font-family: var(--serif); font-weight: 500;
-  font-size: 100px; line-height: 1.05; color: var(--primary);
+  font-size: clamp(72px, 22.7vw, 100px); line-height: 1.05; color: var(--primary);
 }
 .month { font-size: 12px; letter-spacing: 2px; line-height: 1.4; color: var(--label); }
 
-.label { font-size: 13px; line-height: 1.4; color: var(--btn-text); margin-top: -12px; }
+/* ---------- Horaires ---------- */
+.slots-block { display: flex; flex-direction: column; gap: 10px; }
+.label { font-size: 13px; line-height: 1.4; color: var(--btn-text); }
+
+.slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.slot {
+  height: 52px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  font-family: var(--sans); font-size: 16px; font-weight: 500;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background .25s ease, border-color .25s ease, color .25s ease, transform .15s ease;
+}
+.slot:hover { transform: translateY(-2px); }
+.slot:active { transform: scale(.96); }
+.slot.selected {
+  background: var(--select-bg);
+  border: 1.5px solid var(--primary);
+  color: var(--primary);
+}
 
 /* ---------- Restaurants ---------- */
 .choices { display: flex; flex-direction: column; gap: 10px; }
@@ -188,32 +215,32 @@ body {
   border-radius: 18px;
   font-family: var(--sans); font-size: 16px; font-weight: 500; line-height: 1.4;
   cursor: pointer;
-  transition: transform .15s ease, background .2s ease, box-shadow .2s ease;
+  transition: transform .15s ease, background .2s ease, box-shadow .2s ease, opacity .2s ease;
 }
 .btn:active { transform: scale(.97); }
 .btn-primary { background: var(--primary); color: #fff; border: none; }
 .btn-primary:hover { box-shadow: 0 8px 20px rgba(121, 65, 121, .28); transform: translateY(-1px); }
 .btn-primary:active { background: #62336a; }
+.btn-primary:disabled { opacity: .4; cursor: not-allowed; box-shadow: none; transform: none; }
 .btn-ghost {
   background: var(--bg); color: var(--btn-text);
   border: 1px solid var(--ghost-line);
 }
 .btn-ghost:hover { background: #efe5f2; }
-.actions.row .btn-primary { flex: 0 0 182px; }
-.actions.row .btn-ghost { flex: 1; }
+.actions.row .btn { flex: 1; }
 
 /* ---------- Dernier écran : « Je t'aime » + 4 cœurs ---------- */
 .screen.final { align-items: center; justify-content: center; }
 
 .love {
   position: relative;
-  width: 256px;
+  width: min(256px, 70vw);
   padding: 70px 0;
   text-align: center;
 }
 .te-amo {
   font-family: var(--serif); font-weight: 400;
-  font-size: 96px; line-height: normal; color: #000;
+  font-size: clamp(64px, 21.8vw, 96px); line-height: normal; color: #000;
 }
 .screen.final.active .te-amo {
   animation: textIn 1.1s cubic-bezier(.22, 1, .36, 1) both;
@@ -229,10 +256,10 @@ body {
   color: var(--primary);
   opacity: 0;
 }
-.heart.h1 { top: 24px;    left: -28px;  --r: -14deg; color: #794179; }
-.heart.h2 { top: 6px;     right: -24px; --r: 12deg;  color: #a06aa0; width: 30px; height: 30px; }
-.heart.h3 { bottom: 10px; left: -14px;  --r: 10deg;  color: #a06aa0; width: 30px; height: 30px; }
-.heart.h4 { bottom: 26px; right: -30px; --r: -12deg; color: #794179; }
+.heart.h1 { top: 24px;    left: -22px;  --r: -14deg; color: #794179; }
+.heart.h2 { top: 6px;     right: -18px; --r: 12deg;  color: #a06aa0; width: 30px; height: 30px; }
+.heart.h3 { bottom: 10px; left: -10px;  --r: 10deg;  color: #a06aa0; width: 30px; height: 30px; }
+.heart.h4 { bottom: 26px; right: -24px; --r: -12deg; color: #794179; }
 
 .screen.final.active .heart {
   animation:
@@ -259,6 +286,39 @@ body {
 @keyframes drift {
   0%, 100% { translate: 0 0; }
   50% { translate: 0 -9px; }
+}
+
+/* ---------- Responsive ---------- */
+
+/* Petits écrans (hauteur) : on resserre les espaces */
+@media (max-height: 720px) {
+  .screen { gap: 14px; padding-top: 20px; padding-bottom: 18px; }
+  .top { gap: 16px; }
+  .invitation { gap: 16px; }
+  .day-card { padding: 14px 0 16px; }
+  .choice { height: 54px; }
+  .slot { height: 48px; }
+  .btn { height: 52px; }
+}
+
+/* Très petits écrans (largeur) */
+@media (max-width: 340px) {
+  .choice { padding: 0 12px; gap: 10px; }
+  .choice .name { font-size: 15px; }
+  .actions.row { flex-direction: column; }
+}
+
+/* Tablette / ordinateur : carte centrée type mobile */
+@media (min-width: 600px) {
+  body { display: grid; place-items: center; padding: 24px; background: #ece2ef; }
+  .app {
+    min-height: min(900px, calc(100dvh - 48px));
+    border-radius: 32px;
+    box-shadow: 0 24px 60px rgba(72, 39, 71, .18);
+    background: var(--bg);
+    overflow: hidden;
+  }
+  .screen { padding-top: 36px; padding-bottom: 32px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

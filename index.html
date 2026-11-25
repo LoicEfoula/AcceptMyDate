@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Quelques mots pour toi</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -44,8 +44,8 @@
       </div>
 
       <div class="actions row reveal">
-        <button class="btn btn-primary" data-next>Oui</button>
-        <button class="btn btn-ghost" data-next id="btnNon">Non</button>
+        <button class="btn btn-primary" data-next data-answer="Oui">Oui</button>
+        <button class="btn btn-ghost" data-next data-answer="Non">Non</button>
       </div>
     </section>
 
@@ -68,11 +68,18 @@
           <p class="month">NOVEMBRE 2026</p>
         </div>
 
-        <p class="label reveal">La date de notre rendez-vous</p>
+        <div class="slots-block reveal">
+          <p class="label">À quelle heure es-tu disponible ?</p>
+          <div class="slots" id="slots" role="group" aria-label="Horaires de disponibilité">
+            <button class="slot" data-time="15h">15h</button>
+            <button class="slot" data-time="16h">16h</button>
+            <button class="slot" data-time="17h">17h</button>
+          </div>
+        </div>
       </div>
 
       <div class="actions reveal">
-        <button class="btn btn-primary" data-next>D'accord</button>
+        <button class="btn btn-primary" id="btnJour" data-next disabled>D'accord</button>
       </div>
     </section>
 
@@ -100,7 +107,7 @@
       </div>
 
       <div class="actions reveal">
-        <button class="btn btn-primary" data-next>Celui-ci</button>
+        <button class="btn btn-primary" id="btnResto" data-next>Celui-ci</button>
       </div>
     </section>
 
