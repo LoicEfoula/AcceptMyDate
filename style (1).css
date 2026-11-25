@@ -1,0 +1,266 @@
+:root {
+  --bg: #f6f0f8;
+  --card: #fffcff;
+  --line: #e5d8e9;
+  --primary: #794179;
+  --ink: #482747;
+  --muted: #7b667e;
+  --label: #794e79;
+  --btn-text: #67436c;
+  --ghost-line: #cbb5d0;
+  --select-bg: #eee1f0;
+  --num: #89718d;
+  --letter: #503e53;
+  --serif: "Cormorant Garamond", Georgia, serif;
+  --sans: "DM Sans", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { height: 100%; }
+
+body {
+  background: var(--bg);
+  font-family: var(--sans);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Conteneur au format mobile de la maquette (440 x 956) */
+.app {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.screen {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 36px 32px 32px;
+  background: var(--bg);
+}
+.screen.active { display: flex; }
+
+/* ---------- Animations d'entrée / sortie ---------- */
+.screen.active .reveal {
+  animation: rise .7s cubic-bezier(.22, 1, .36, 1) both;
+}
+.screen.active .reveal:nth-child(1) { animation-delay: .05s; }
+.screen.active .reveal:nth-child(2) { animation-delay: .18s; }
+.screen.active .reveal:nth-child(3) { animation-delay: .31s; }
+
+.screen.active .stack .reveal:nth-child(1) { animation-delay: .15s; }
+.screen.active .stack .reveal:nth-child(2) { animation-delay: .28s; }
+.screen.active .stack .reveal:nth-child(3) { animation-delay: .4s; }
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.screen.leaving {
+  display: flex;
+  animation: leave .4s ease both;
+  pointer-events: none;
+}
+@keyframes leave {
+  to { opacity: 0; transform: translateX(-24px); }
+}
+
+/* ---------- Textes ---------- */
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 2px;
+  line-height: 1.4;
+  color: var(--label);
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+.eyebrow.small { font-size: 10px; font-weight: 400; margin-bottom: 0; }
+
+.title-43 { font-family: var(--serif); font-weight: 500; font-size: 43px; line-height: 1; color: var(--ink); }
+.title-44 { font-family: var(--serif); font-weight: 500; font-size: 44px; line-height: 1.08; color: var(--ink); }
+.title-46 { font-family: var(--serif); font-weight: 500; font-size: 46px; line-height: 1.08; color: var(--ink); }
+
+.sub { font-size: 16px; line-height: 1.4; color: var(--muted); }
+.sub.left { text-align: left; }
+.sub.small { font-size: 15px; }
+
+/* ---------- Accueil ---------- */
+.letter {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 24px;
+  font-size: 15px;
+  line-height: 22px;
+  color: var(--letter);
+}
+.letter p + p { margin-top: 14px; }
+
+/* ---------- Progression ---------- */
+.top { display: flex; flex-direction: column; gap: 22px; }
+.step { text-align: right; font-size: 12px; line-height: 1.4; color: var(--muted); }
+.progress { display: flex; gap: 6px; }
+.progress i {
+  flex: 1; height: 3px; border-radius: 2px;
+  background: var(--line);
+  position: relative; overflow: hidden;
+}
+.progress i.on::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: var(--primary);
+  transform-origin: left;
+  animation: fill .8s ease .3s both;
+}
+.progress i.on:last-child::after { animation-delay: .35s; }
+@keyframes fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+/* ---------- Carte invitation ---------- */
+.invitation {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  padding: 36px 28px 40px;
+  text-align: center;
+  display: flex; flex-direction: column; gap: 24px;
+}
+
+/* ---------- Jour du date ---------- */
+.stack { display: flex; flex-direction: column; gap: 28px; }
+.intro { display: flex; flex-direction: column; gap: 10px; }
+.intro .title-44 + .sub { margin-top: 2px; }
+
+.day-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 22px 0 26px;
+  text-align: center;
+}
+.day-card .eyebrow { margin-bottom: 0; }
+.day {
+  font-family: var(--serif); font-weight: 500;
+  font-size: 100px; line-height: 1.05; color: var(--primary);
+}
+.month { font-size: 12px; letter-spacing: 2px; line-height: 1.4; color: var(--label); }
+
+.label { font-size: 13px; line-height: 1.4; color: var(--btn-text); margin-top: -12px; }
+
+/* ---------- Restaurants ---------- */
+.choices { display: flex; flex-direction: column; gap: 10px; }
+.choice {
+  display: flex; align-items: center; gap: 14px;
+  height: 62px; padding: 0 18px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  font-family: var(--sans); text-align: left; cursor: pointer;
+  transition: background .25s ease, border-color .25s ease, transform .15s ease;
+}
+.choice:hover { transform: translateX(3px); }
+.choice:active { transform: scale(.985); }
+.choice .num { width: 24px; font-size: 11px; color: var(--num); transition: color .25s ease; }
+.choice .name { flex: 1; font-size: 16px; color: var(--ink); }
+.choice .tag { font-size: 11px; color: var(--primary); opacity: 0; transform: translateX(8px); transition: opacity .25s ease, transform .25s ease; }
+.choice.selected {
+  background: var(--select-bg);
+  border: 1.5px solid var(--primary);
+}
+.choice.selected .num { color: var(--primary); }
+.choice.selected .name { font-weight: 500; }
+.choice.selected .tag { opacity: 1; transform: none; }
+
+/* ---------- Boutons ---------- */
+.actions { display: flex; flex-direction: column; gap: 16px; }
+.actions.row { flex-direction: row; gap: 12px; }
+
+.btn {
+  height: 56px; width: 100%;
+  border-radius: 18px;
+  font-family: var(--sans); font-size: 16px; font-weight: 500; line-height: 1.4;
+  cursor: pointer;
+  transition: transform .15s ease, background .2s ease, box-shadow .2s ease;
+}
+.btn:active { transform: scale(.97); }
+.btn-primary { background: var(--primary); color: #fff; border: none; }
+.btn-primary:hover { box-shadow: 0 8px 20px rgba(121, 65, 121, .28); transform: translateY(-1px); }
+.btn-primary:active { background: #62336a; }
+.btn-ghost {
+  background: var(--bg); color: var(--btn-text);
+  border: 1px solid var(--ghost-line);
+}
+.btn-ghost:hover { background: #efe5f2; }
+.actions.row .btn-primary { flex: 0 0 182px; }
+.actions.row .btn-ghost { flex: 1; }
+
+/* ---------- Dernier écran : « Je t'aime » + 4 cœurs ---------- */
+.screen.final { align-items: center; justify-content: center; }
+
+.love {
+  position: relative;
+  width: 256px;
+  padding: 70px 0;
+  text-align: center;
+}
+.te-amo {
+  font-family: var(--serif); font-weight: 400;
+  font-size: 96px; line-height: normal; color: #000;
+}
+.screen.final.active .te-amo {
+  animation: textIn 1.1s cubic-bezier(.22, 1, .36, 1) both;
+}
+@keyframes textIn {
+  from { opacity: 0; transform: scale(.92); letter-spacing: 6px; }
+  to   { opacity: 1; transform: none; }
+}
+
+.heart {
+  position: absolute;
+  width: 38px; height: 38px;
+  color: var(--primary);
+  opacity: 0;
+}
+.heart.h1 { top: 24px;    left: -28px;  --r: -14deg; color: #794179; }
+.heart.h2 { top: 6px;     right: -24px; --r: 12deg;  color: #a06aa0; width: 30px; height: 30px; }
+.heart.h3 { bottom: 10px; left: -14px;  --r: 10deg;  color: #a06aa0; width: 30px; height: 30px; }
+.heart.h4 { bottom: 26px; right: -30px; --r: -12deg; color: #794179; }
+
+.screen.final.active .heart {
+  animation:
+    heartIn .8s cubic-bezier(.34, 1.56, .64, 1) both,
+    beat 1.3s ease-in-out infinite,
+    drift 3.2s ease-in-out infinite;
+}
+.screen.final.active .h1 { animation-delay: .5s, 1.3s, 1.3s; }
+.screen.final.active .h2 { animation-delay: .7s, 1.5s, 1.8s; }
+.screen.final.active .h3 { animation-delay: .9s, 1.7s, 2.3s; }
+.screen.final.active .h4 { animation-delay: 1.1s, 1.9s, 2.8s; }
+
+@keyframes heartIn {
+  from { opacity: 0; transform: scale(0) rotate(var(--r)); }
+  to   { opacity: 1; transform: scale(1) rotate(var(--r)); }
+}
+@keyframes beat {
+  0%, 100% { scale: 1; }
+  15% { scale: 1.22; }
+  30% { scale: .96; }
+  45% { scale: 1.16; }
+  60% { scale: 1; }
+}
+@keyframes drift {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -9px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
