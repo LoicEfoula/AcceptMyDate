@@ -7,7 +7,7 @@
       et colle-la ci-dessous à la place du texte entre guillemets.
    ===================================================== */
 const CONFIG = {
-  endpoint: "https://formspree.io/f/mwloyrnr",
+  endpoint: "https://formspree.io/f/xljbvobr",
 };
 
 /* ---------------- Navigation entre écrans ---------------- */
